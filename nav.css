@@ -1,0 +1,80 @@
+/* ====== NAV CORE (drop-in) ====== */
+/* Kamu bisa override variabel ini di halamanmu */
+:root{
+  --primary:#007BFF;
+  --shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+/* HEADER BAR — hamburger nempel kiri, center vertikal */
+header.navbar{
+  position: sticky;
+  top: 0;
+  z-index: 1002;
+  height: 56px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;     /* tengah vertikal */
+  justify-content: flex-start; /* nempel kiri */
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+/* TOMBOL HAMBURGER */
+.nav-hamburger-btn{
+  width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 0; padding: 0; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-hamburger{ width: 24px; height: 18px; position: relative; }
+.nav-hamburger i{
+  position: absolute; left: 0; right: 0; height: 3px; border-radius: 3px;
+  background: var(--primary);
+  transition: transform .25s ease, opacity .25s ease, width .25s ease;
+}
+.nav-hamburger i:nth-child(1){ top: 0; }
+.nav-hamburger i:nth-child(2){ top: 7.5px; }
+.nav-hamburger i:nth-child(3){ bottom: 0; }
+
+/* Animasi jadi X */
+.nav-hamburger-btn.active .nav-hamburger i:nth-child(1){ transform: translateY(7.5px) rotate(45deg); }
+.nav-hamburger-btn.active .nav-hamburger i:nth-child(2){ opacity: 0; }
+.nav-hamburger-btn.active .nav-hamburger i:nth-child(3){ transform: translateY(-7.5px) rotate(-45deg); }
+
+/* ===== SIDEBAR ===== */
+.nav-sidebar{
+  position: fixed; top: 0; left: -260px; width: 240px; height: 100%;
+  background: #fff; box-shadow: 2px 0 16px rgba(0,0,0,.12);
+  padding-top: 64px; transition: left .3s ease; z-index: 1001; overflow-y: auto;
+}
+.nav-sidebar.open{ left: 0; }
+
+.nav-title{
+  font-size: 11px; letter-spacing: .8px; text-transform: uppercase;
+  color: #9aa0a6; padding: 8px 16px;
+}
+
+.nav-link, .nav-submenu-toggle{
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 10px 16px; text-decoration: none; color: #333; font-size: 13px;
+  background: none; border: none; text-align: left; cursor: pointer;
+  border-left: 3px solid transparent; transition: background .2s, color .2s, border-color .2s;
+}
+.nav-link:hover, .nav-submenu-toggle:hover{
+  background: #f4f6f8; color: var(--primary); border-color: var(--primary);
+}
+
+/* SUBMENU */
+.nav-submenu{ display: none; padding: 4px 0 8px 0; }
+.nav-submenu.open{ display: block; }
+.nav-submenu .nav-link{ padding-left: 32px; font-size: 12.5px; }
+.nav-caret{ margin-left: auto; font-size: 12px; transition: transform .2s ease; }
+.nav-submenu-toggle[aria-expanded="true"] .nav-caret{ transform: rotate(90deg); }
+
+/* OVERLAY */
+.nav-overlay{
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease;
+  z-index: 1000;
+}
+.nav-overlay.active{ opacity: 1; visibility: visible; }
