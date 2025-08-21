@@ -1,0 +1,237 @@
+    :root {
+      --radius: 12px;
+      --pad: 12px;
+      --height: 48px;
+      --border: 1px solid #cfcfcf;
+      --primary: #007BFF;
+      --shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 0;
+      color: #333;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ===== Header & Hamburger (sejajar brand) ===== */
+    header {
+      background: #fff;
+      box-shadow: var(--shadow);
+      padding: 0 16px;               /* nolkan vertikal agar tinggi header dikontrol height */
+      position: sticky;
+      top: 0;
+      z-index: 1002;
+      height: 56px;                  /* tinggi konsisten */
+      display: flex;
+      align-items: center;           /* sejajarkan vertikal */
+    }
+
+    .header-wrap {
+      display: flex;
+      align-items: center;           /* hamburger & brand sejajar */
+      gap: 12px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hamburger {
+      width: 25px;
+      height: 19px;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      align-self: center;            /* pastikan pusat */
+    }
+    .hamburger span {
+      display: block;
+      height: 2.5px;
+      width: 100%;
+      background: var(--primary);    /* biru */
+      border-radius: 3px;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+    /* Animasi jadi 'X' */
+    .hamburger.active span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+
+    .brand {
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: .2px;
+      color: #333;
+      line-height: 1;                /* cegah offset baseline */
+      user-select: none;
+    }
+
+    /* ===== Sidebar Navigation ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -260px;                  /* hidden default */
+      width: 240px;
+      height: 100%;
+      background: #fff;
+      box-shadow: 2px 0 16px rgba(0,0,0,0.12);
+      padding-top: 64px;
+      transition: left 0.3s ease;
+      z-index: 1001;
+      overflow-y: auto;
+    }
+    .sidebar.open { left: 0; }
+
+    .nav-title {
+      font-size: 11px;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      color: #9aa0a6;
+      padding: 8px 16px;
+    }
+
+    .nav-link, .submenu-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 16px;
+      text-decoration: none;
+      color: #333;
+      font-size: 13px;               /* kecil sesuai request */
+      border: none;
+      background: none;
+      text-align: left;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .nav-link:hover, .submenu-toggle:hover {
+      background: #f4f6f8;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .submenu {
+      display: none;
+      padding: 4px 0 8px 0;
+    }
+    .submenu.open { display: block; }
+    .submenu .nav-link {
+      padding-left: 32px;            /* indent submenu */
+      font-size: 12.5px;
+    }
+
+    .caret {
+      margin-left: auto;
+      transition: transform .2s ease;
+      font-size: 12px;
+    }
+    .submenu-toggle[aria-expanded="true"] .caret {
+      transform: rotate(90deg);
+    }
+
+    /* Overlay untuk close ketika klik di luar menu */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 1000;
+    }
+    .overlay.active { opacity: 1; visibility: visible; }
+
+    /* ===== Content Card ===== */
+    .container {
+      max-width: 500px;
+      margin: 24px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    h2 { margin: 0 0 20px 0; text-align: center; }
+
+    label { font-weight: 600; display: block; margin-top: 18px; }
+
+    input, select, button {
+      width: 100%;
+      padding: var(--pad);
+      margin-top: 10px;
+      border-radius: 8px;
+      border: var(--border);
+      font-size: 16px;
+      line-height: 1.25;
+      height: var(--height);
+      outline: none;
+      background: #fff;
+    }
+    input:focus, select:focus, button:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, .15);
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 18px 18px;
+      padding-right: 44px;
+    }
+    @supports (-webkit-touch-callout: none) { select { padding-right: 44px; } }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.2s ease;
+      height: calc(var(--height) + 2px);
+    }
+    button:hover { background-color: #0056b3; }
+
+    .description {
+      background: #f9f9f9;
+      border-left: 4px solid var(--primary);
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+    .log-box {
+      background: #eef1f5;
+      padding: 15px;
+      border-radius: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 300px;
+      overflow-y: auto;
+      border: var(--border);
+      margin-top: 10px;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 13px;
+      color: #999;
+    }
